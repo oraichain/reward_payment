@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HandleMsg",
+  "anyOf": [
+    {
+      "type": "object",
+      "required": [
+        "active_user"
+      ],
+      "properties": {
+        "active_user": {
+          "type": "object",
+          "required": [
+            "addr",
+            "group_name"
+          ],
+          "properties": {
+            "addr": {
+              "$ref": "#/definitions/HumanAddr"
+            },
+            "group_name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "deactive_user"
+      ],
+      "properties": {
+        "deactive_user": {
+          "type": "object",
+          "required": [
+            "addr",
+            "group_name"
+          ],
+          "properties": {
+            "addr": {
+              "$ref": "#/definitions/HumanAddr"
+            },
+            "group_name": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "update_reward"
+      ],
+      "properties": {
+        "update_reward": {
+          "type": "object",
+          "required": [
+            "group_name",
+            "new_reward_amount"
+          ],
+          "properties": {
+            "group_name": {
+              "type": "string"
+            },
+            "new_reward_amount": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0.0
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "update_admin"
+      ],
+      "properties": {
+        "update_admin": {
+          "type": "object",
+          "required": [
+            "admin_address"
+          ],
+          "properties": {
+            "admin_address": {
+              "$ref": "#/definitions/HumanAddr"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "pay"
+      ],
+      "properties": {
+        "pay": {
+          "type": "object",
+          "required": [
+            "group_name",
+            "rate"
+          ],
+          "properties": {
+            "group_name": {
+              "type": "string"
+            },
+            "rate": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0.0
+            }
+          }
+        }
+      }
+    }
+  ],
+  "definitions": {
+    "HumanAddr": {
+      "type": "string"
+    }
+  }
+}

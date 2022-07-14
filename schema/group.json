@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Group",
+  "type": "object",
+  "required": [
+    "usd_reward",
+    "users"
+  ],
+  "properties": {
+    "usd_reward": {
+      "type": "integer",
+      "format": "uint32",
+      "minimum": 0.0
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/HumanAddr"
+      }
+    }
+  },
+  "definitions": {
+    "HumanAddr": {
+      "type": "string"
+    }
+  }
+}
