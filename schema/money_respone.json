@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MoneyRespone",
+  "type": "object",
+  "required": [
+    "orai_reward"
+  ],
+  "properties": {
+    "orai_reward": {
+      "type": "string"
+    }
+  }
+}

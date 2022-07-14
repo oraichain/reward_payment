@@ -3,7 +3,7 @@ use std::fs::create_dir_all;
 
 use cosmwasm_schema::{export_schema, remove_schemas, schema_for};
 
-use reward_payment::msg::{HandleMsg, InitMsg, QueryMsg, InfoResponse, BalanceRespone, AdminRespone};
+use reward_payment::msg::{HandleMsg, InitMsg, QueryMsg, InfoResponse, BalanceRespone, AdminRespone, MoneyRespone};
 use reward_payment::state::Group;
 
 fn main() {
@@ -19,4 +19,5 @@ fn main() {
     export_schema(&schema_for!(InfoResponse), &out_dir);
     export_schema(&schema_for!(BalanceRespone), &out_dir);
     export_schema(&schema_for!(AdminRespone), &out_dir);
+    export_schema(&schema_for!(MoneyRespone), &out_dir);
 }

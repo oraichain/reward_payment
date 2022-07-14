@@ -1,4 +1,6 @@
-use cosmwasm_std::{attr, DepsMut, MessageInfo, HandleResponse, Env, BankMsg, coin, CosmosMsg, Uint128, StdResult};
+use std::str::FromStr;
+
+use cosmwasm_std::{attr, DepsMut, MessageInfo, HandleResponse, Env, BankMsg, coin, CosmosMsg, Uint128, StdResult, Decimal};
 use cosmwasm_std::HumanAddr;
 
 use crate::error::ContractError;
@@ -100,13 +102,13 @@ pub fn update_reward(deps: DepsMut, info: MessageInfo, group_name: String, new_r
 /* 
     pay reward: send token to wallets in group by rate, refund token to sender
 */
-pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String, rate: u32) ->  Result<HandleResponse, ContractError>{
+pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String, rate: String) ->  Result<HandleResponse, ContractError>{
     if get_admin_address(deps.storage).load()? != info.sender {
         return Err(ContractError::Unauthorized {})
     }
 
     let group = get_group_info(deps.storage).load(&group_name.as_bytes())?;
-    let reward_amount = group.usd_reward;
+    let usd_reward_amount = group.usd_reward;
 
     let users = group.users;
 
@@ -114,7 +116,11 @@ pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String,
 
     let _token_denom = get_token_info(deps.storage).load()?;
 
-    let need_balance = ((users.len() as u32) * rate * reward_amount) as u128;
+    let rate_decimal = Decimal::from_str(&rate)?* Uint128::from(1000 as u128);
+    let orai_reward_per_wallet = 10_u128.pow(9)* usd_reward_amount as u128 / Uint128::u128(&rate_decimal);
+
+
+    let need_balance = (users.len() as u128) * orai_reward_per_wallet;
 
 
     if sent_balance < need_balance {
@@ -125,11 +131,10 @@ pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String,
     let sender = HumanAddr::to_string(&env.contract.address);
 
     for wallet_addr in users.iter() {
-        let amout_to_fund = rate * reward_amount ;
         let sender_addr = HumanAddr::from(sender.clone());
         let reciever_addr = HumanAddr::from(wallet_addr);
 
-        let msg_succes = send_token(amout_to_fund as u128, sender_addr, reciever_addr, &_token_denom.clone())?;
+        let msg_succes = send_token(orai_reward_per_wallet, sender_addr, reciever_addr, &_token_denom.clone())?;
         transfer_messages.push(msg_succes);
     
     }

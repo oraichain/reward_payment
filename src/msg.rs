@@ -16,7 +16,7 @@ pub enum HandleMsg {
     DeactiveUser {addr: HumanAddr, group_name: String},
     UpdateReward { group_name: String, new_reward_amount: u32},
     UpdateAdmin {admin_address: HumanAddr},
-    Pay {group_name: String, rate: u32}
+    Pay {group_name: String, rate: String}
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
@@ -25,6 +25,7 @@ pub enum QueryMsg {
     GetInfoGroup {group_name: String},
     GetCurrentBalance {},
     GetInfoAdmin {},
+    GetMoneySwap {rate: String, usd_reward: u32},
 }
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
@@ -43,4 +44,8 @@ pub struct AdminRespone {
     pub admin_address: HumanAddr,
 }
 
+#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
+pub struct MoneyRespone {
+    pub orai_reward: String,
+}
 

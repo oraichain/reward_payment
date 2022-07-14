@@ -42,6 +42,31 @@
           "type": "object"
         }
       }
+    },
+    {
+      "type": "object",
+      "required": [
+        "get_money_swap"
+      ],
+      "properties": {
+        "get_money_swap": {
+          "type": "object",
+          "required": [
+            "rate",
+            "usd_reward"
+          ],
+          "properties": {
+            "rate": {
+              "type": "string"
+            },
+            "usd_reward": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0.0
+            }
+          }
+        }
+      }
     }
   ]
 }

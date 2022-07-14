@@ -6,7 +6,7 @@ use crate::error::ContractError;
 use crate::msg::{HandleMsg, InitMsg, QueryMsg};
 use crate::state::{set_token_info, set_group_info, set_admin_address, Group};
 use crate::execute::{active_user, deactive_user, update_reward, pay_reward, update_admin};
-use crate::query::{get_info_group, get_current_balance, get_info_admin};
+use crate::query::{get_info_group, get_current_balance, get_info_admin, get_money_reward};
 use crate::config::{AI_EXECUTOR_WALLETS, VRF_WALLETS, AI_EXECUTOR_USD_REWARD, VRF_USD_REWARD, TOKEN_DENOM, AI_EXECUTOR_SERVICE_NAME, VRF_SERVICE_NAME};
 
 
@@ -21,7 +21,8 @@ pub fn init(deps: DepsMut, _env: Env, _info: MessageInfo, msg: InitMsg) -> StdRe
     set_group_info(deps.storage).save(AI_EXECUTOR_SERVICE_NAME.as_bytes(), &ai_executor_group)?;
     set_group_info(deps.storage).save(VRF_SERVICE_NAME.as_bytes(), &vrf_group)?;
 
-    set_admin_address(deps.storage).save(&msg.admin_address)?;
+    // set_admin_address(deps.storage).save(&msg.admin_address)?;
+    set_admin_address(deps.storage).save(&_info.sender)?;
     set_token_info(deps.storage).save(&TOKEN_DENOM.to_string())?;
 
     Ok(InitResponse::default())
@@ -48,6 +49,7 @@ pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> Result<Binary, ContractErro
         QueryMsg::GetInfoGroup {group_name} => to_binary(&get_info_group(deps, group_name)?)?,
         QueryMsg::GetCurrentBalance {} => to_binary(&get_current_balance(deps, env)?)?,
         QueryMsg::GetInfoAdmin {} => to_binary(&get_info_admin(deps)?)?,
+        QueryMsg::GetMoneySwap { rate, usd_reward } => to_binary(&get_money_reward(rate, usd_reward)?)?,
         
     };
     Ok(response)
