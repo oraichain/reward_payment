@@ -17,12 +17,12 @@ pub fn init(deps: DepsMut, _env: Env, _info: MessageInfo, msg: InitMsg) -> StdRe
     let ai_executor_group = Group{users: ai_executor_addrs, usd_reward: AI_EXECUTOR_USD_REWARD};
     let vrf_group = Group{users: vrf_addrs, usd_reward: VRF_USD_REWARD};
 
-
     set_group_info(deps.storage).save(AI_EXECUTOR_SERVICE_NAME.as_bytes(), &ai_executor_group)?;
     set_group_info(deps.storage).save(VRF_SERVICE_NAME.as_bytes(), &vrf_group)?;
 
+
     // set_admin_address(deps.storage).save(&msg.admin_address)?;
-    set_admin_address(deps.storage).save(&_info.sender)?;
+    set_admin_address(deps.storage).save(&msg.admin_address)?;
     set_token_info(deps.storage).save(&TOKEN_DENOM.to_string())?;
 
     Ok(InitResponse::default())
@@ -39,7 +39,7 @@ pub fn handle(
         HandleMsg::DeactiveUser { addr, group_name } => deactive_user(deps, info, addr, group_name),
         HandleMsg::UpdateReward { group_name, new_reward_amount } => update_reward(deps, info, group_name, new_reward_amount),
         HandleMsg::UpdateAdmin { admin_address } => update_admin(deps, info, admin_address),
-        HandleMsg::Pay { group_name, rate } => pay_reward(deps, env, info, group_name, rate)
+        HandleMsg::Pay { group_name, rate, special_group } => pay_reward(deps, env, info, group_name, rate, special_group)
 
     }
 }
@@ -55,3 +55,5 @@ pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> Result<Binary, ContractErro
     Ok(response)
 }
 
+
+// orai14n3tx8s5ftzhlxvq0w5962v60vd82h30rha573

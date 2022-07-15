@@ -15,6 +15,12 @@ pub struct Group {
     pub usd_reward: u32,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct SpecialGroup {
+    pub users: Vec<HumanAddr>,
+    pub rate: String,
+}
+
 
 // pub const REWARD_PAYEMENT_INFO: Map<&str, Group> = Map::new("REWARD_PAYEMENT_INFO");
 // pub const TOKEN_INFO: Item<HumanAddr> = Item::new("TOKEN_INFO");

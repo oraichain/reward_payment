@@ -2,6 +2,7 @@ use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
 use cosmwasm_std::{HumanAddr, Uint128};
+use crate::state::SpecialGroup;
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct InitMsg {
@@ -16,7 +17,7 @@ pub enum HandleMsg {
     DeactiveUser {addr: HumanAddr, group_name: String},
     UpdateReward { group_name: String, new_reward_amount: u32},
     UpdateAdmin {admin_address: HumanAddr},
-    Pay {group_name: String, rate: String}
+    Pay {group_name: String, rate: String , special_group: Option<SpecialGroup>}
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

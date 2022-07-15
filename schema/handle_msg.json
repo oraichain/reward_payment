@@ -110,6 +110,16 @@
             },
             "rate": {
               "type": "string"
+            },
+            "special_group": {
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/SpecialGroup"
+                },
+                {
+                  "type": "null"
+                }
+              ]
             }
           }
         }
@@ -119,6 +129,24 @@
   "definitions": {
     "HumanAddr": {
       "type": "string"
+    },
+    "SpecialGroup": {
+      "type": "object",
+      "required": [
+        "rate",
+        "users"
+      ],
+      "properties": {
+        "rate": {
+          "type": "string"
+        },
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/HumanAddr"
+          }
+        }
+      }
     }
   }
 }
