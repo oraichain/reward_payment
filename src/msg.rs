@@ -7,7 +7,7 @@ use crate::state::SpecialGroup;
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
 pub struct InitMsg {
     // pub token_denom: String,
-    pub admin_address: HumanAddr,
+    // pub admin_address: HumanAddr,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]

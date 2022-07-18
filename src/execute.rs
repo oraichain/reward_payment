@@ -112,7 +112,7 @@ pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String,
     let _token_denom = get_token_info(deps.storage).load()?;
 
     let group = get_group_info(deps.storage).load(&group_name.as_bytes())?;
-    let special_group = special_group.unwrap_or(SpecialGroup { users: vec![], rate: "0".to_string()});
+    let special_group = special_group.unwrap_or(SpecialGroup { users: group.users.clone(), rate: rate.clone()});
 
     let usd_reward_amount = group.usd_reward;
 

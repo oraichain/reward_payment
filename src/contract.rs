@@ -10,7 +10,7 @@ use crate::query::{get_info_group, get_current_balance, get_info_admin, get_mone
 use crate::config::{AI_EXECUTOR_WALLETS, VRF_WALLETS, AI_EXECUTOR_USD_REWARD, VRF_USD_REWARD, TOKEN_DENOM, AI_EXECUTOR_SERVICE_NAME, VRF_SERVICE_NAME};
 
 
-pub fn init(deps: DepsMut, _env: Env, _info: MessageInfo, msg: InitMsg) -> StdResult<InitResponse> {
+pub fn init(deps: DepsMut, _env: Env, info: MessageInfo, _msg: InitMsg) -> StdResult<InitResponse> {
     let ai_executor_addrs: Vec<HumanAddr> = AI_EXECUTOR_WALLETS.iter().map(|wallet_addr| HumanAddr::from(wallet_addr.to_string())).collect();
     let vrf_addrs: Vec<HumanAddr> = VRF_WALLETS.iter().map(|wallet_addr| HumanAddr::from(wallet_addr.to_string())).collect();
 
@@ -21,8 +21,7 @@ pub fn init(deps: DepsMut, _env: Env, _info: MessageInfo, msg: InitMsg) -> StdRe
     set_group_info(deps.storage).save(VRF_SERVICE_NAME.as_bytes(), &vrf_group)?;
 
 
-    // set_admin_address(deps.storage).save(&msg.admin_address)?;
-    set_admin_address(deps.storage).save(&msg.admin_address)?;
+    set_admin_address(deps.storage).save(&info.sender)?;
     set_token_info(deps.storage).save(&TOKEN_DENOM.to_string())?;
 
     Ok(InitResponse::default())
