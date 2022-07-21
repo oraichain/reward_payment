@@ -6,6 +6,7 @@ use crate::msg::{InfoResponse, BalanceRespone, AdminRespone, MoneyRespone};
 use crate::state::{get_group_info, get_admin_address};
 use crate::error::ContractError;
 
+
 pub fn get_info_group(deps: Deps, group_name: String) -> Result<InfoResponse, ContractError>{
     let group = get_group_info(deps.storage).load(&group_name.as_bytes())?;
     Ok(InfoResponse{users: group.users, usd_reward: group.usd_reward})

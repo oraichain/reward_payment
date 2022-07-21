@@ -15,6 +15,9 @@ pub enum ContractError {
     #[error("ValidUser user: {user:?}")]
     ValidUser { user: String},
 
+    #[error("Do not have funds")]
+    DoNotHaveFund {},
+
     #[error("Not enough balance current balance: {current_balance:?}, need_balance: {need_balance:?}")]
     NotEnoughBalance { current_balance: u128, need_balance: u128},
 }

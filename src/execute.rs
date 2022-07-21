@@ -107,7 +107,11 @@ pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String,
     //     return Err(ContractError::Unauthorized {})
     // }
     
+    if info.sent_funds.len() == 0 {
+        return Err(ContractError::DoNotHaveFund {})
+    }
 
+    
     let sent_balance = Uint128::u128(&info.sent_funds[0].amount);
     let _token_denom = get_token_info(deps.storage).load()?;
 

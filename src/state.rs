@@ -21,12 +21,6 @@ pub struct SpecialGroup {
     pub rate: String,
 }
 
-
-// pub const REWARD_PAYEMENT_INFO: Map<&str, Group> = Map::new("REWARD_PAYEMENT_INFO");
-// pub const TOKEN_INFO: Item<HumanAddr> = Item::new("TOKEN_INFO");
-// pub const ADMIN_ADDR: Item<HumanAddr> = Item::new("ADMIN_ADDRESS");
-
-
 pub fn set_admin_address(storage: &mut dyn Storage) -> Singleton<HumanAddr> {
     singleton(storage, b"ADMIN_ADDRESS")
 }
