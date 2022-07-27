@@ -1,6 +1,11 @@
+image: orai/cosmwasm-gitpod:0.11.7
+workspaceLocation: './'
+
 tasks:
-  - init: |
-     sudo apt-get install libx11-dev libxext-dev libxft-dev libxinerama-dev libxcursor-dev libxrender-dev libxfixes-dev libpango1.0-dev libgl1-mesa-dev libglu1-mesa-dev
-  - command: |
-     cargo watch -x run
-     cargo build
+  - name: init-cargo-file
+    init: touch Cargo.toml
+
+vscode:
+  extensions:
+    - matklad.rust-analyzer
+    - oraichain.cosmwasm-ide
