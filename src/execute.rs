@@ -158,10 +158,11 @@ pub fn pay_reward(deps: DepsMut, env: Env, info: MessageInfo,group_name: String,
     }
 
     let refund_balance = sent_balance - need_balance;
-    let msg_success = send_token(refund_balance, HumanAddr::from(sender.clone()), info.sender, &_token_denom.clone())?;
 
-    transfer_messages.push(msg_success);
-
+    if refund_balance > 0 {
+        let msg_success = send_token(refund_balance, HumanAddr::from(sender.clone()), info.sender, &_token_denom.clone())?;
+        transfer_messages.push(msg_success);
+    }
 
     Ok(HandleResponse {
         messages: transfer_messages,
