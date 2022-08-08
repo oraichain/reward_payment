@@ -29,6 +29,10 @@ pub enum QueryMsg {
     GetMoneySwap {rate: String, usd_reward: u32},
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct MigrateMsg {}
+
+
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
 pub struct InfoResponse {
     pub users: Vec<HumanAddr>,

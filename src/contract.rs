@@ -1,9 +1,9 @@
-use cosmwasm_std::{to_binary, Binary, DepsMut, Env, Deps,
+use cosmwasm_std::{to_binary, Binary, DepsMut, Env, Deps, MigrateResponse,
     HandleResponse, InitResponse, MessageInfo, StdResult, HumanAddr
 };
 
 use crate::error::ContractError;
-use crate::msg::{HandleMsg, InitMsg, QueryMsg};
+use crate::msg::{HandleMsg, InitMsg, QueryMsg, MigrateMsg};
 use crate::state::{set_token_info, set_group_info, set_admin_address, Group};
 use crate::execute::{active_user, deactive_user, update_reward, pay_reward, update_admin};
 use crate::query::{get_info_group, get_current_balance, get_info_admin, get_money_reward};
@@ -54,5 +54,12 @@ pub fn query(deps: Deps, env: Env, msg: QueryMsg) -> Result<Binary, ContractErro
     Ok(response)
 }
 
+pub fn migrate(
+    _deps: DepsMut,
+    _env: Env,
+    _info: MessageInfo,
+    _msg: MigrateMsg,
+) -> Result<MigrateResponse, ContractError> {
+    Ok(MigrateResponse::default())
+}
 
-// orai14n3tx8s5ftzhlxvq0w5962v60vd82h30rha573
